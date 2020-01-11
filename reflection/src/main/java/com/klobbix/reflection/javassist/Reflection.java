@@ -5,11 +5,9 @@ import javassist.*;
 public class Reflection {
 
 	private ClassPool pool;
-	private Writer writer;
 
 	public Reflection() {
 		pool = ClassPool.getDefault();
-		writer = new Writer(pool);
 	}
 
 	public void insertClassPath(ClassPath cp) {
@@ -34,7 +32,11 @@ public class Reflection {
 	}
 
 	public Writer writer() {
-		return writer;
+		return new Writer(pool);
+	}
+
+	public QuickWriter quickWriter(String name) {
+		return new QuickWriter(name);
 	}
 
 	public Loader loader() {
