@@ -11,6 +11,8 @@
     <modules>
         <module>messaging</module>
         <module>reflection</module>
+        <module>taskrunner</module>
+        <module>database</module>
     </modules>
 
     <properties>
