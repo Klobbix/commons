@@ -89,7 +89,7 @@ public class TaskRunner {
 	 *
 	 * @return The TaskThread object
 	 */
-	protected TaskThread getTaskThread() {
+	public TaskThread getTaskThread() {
 		return taskThread;
 	}
 

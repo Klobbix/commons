@@ -13,6 +13,7 @@
         <module>reflection</module>
         <module>taskrunner</module>
         <module>database</module>
+        <module>lang</module>
     </modules>
 
     <properties>

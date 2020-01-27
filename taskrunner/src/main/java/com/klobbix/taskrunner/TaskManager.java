@@ -17,10 +17,9 @@ public class TaskManager {
 	 * @param task The TaskRunner task
 	 * @return The TaskManager
 	 */
-	public TaskManager add(TaskRunner task) {
+	public void add(TaskRunner task) {
 		tasks.add(task);
 		task.getTaskThread().start();
-		return this;
 	}
 
 	/**
@@ -29,12 +28,11 @@ public class TaskManager {
 	 * @param tasks The TaskRunner tasks
 	 * @return The TaskManager
 	 */
-	public TaskManager add(TaskRunner... tasks) {
+	public void add(TaskRunner... tasks) {
 		for (TaskRunner task : tasks) {
 			this.tasks.add(task);
 			task.getTaskThread().start();
 		}
-		return this;
 	}
 
 	/**
