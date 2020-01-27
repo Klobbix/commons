@@ -1,9 +1,9 @@
 package com.klobbix.taskrunner;
 
 public interface Task {
-    void execute();
+	void execute();
 
-    default boolean activate() {
-        return true;
-    }
+	default boolean activate() {
+		return true;
+	}
 }
