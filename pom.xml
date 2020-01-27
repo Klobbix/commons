@@ -14,6 +14,7 @@
         <module>taskrunner</module>
         <module>database</module>
         <module>lang</module>
+        <module>network</module>
     </modules>
 
     <properties>
