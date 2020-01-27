@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Reads a properties file that has encrypted values.
+ * Reads a properties file that has encrypted values. Encrypted values are surrounded by ENC(VALUE).
+ * An example property looks like the following:
+ * datasource.password=ENC(G6N718UuyPE5bHyWKyuLQSm02auQPUtm)
  */
 public class SecurePropertiesReader {
 
