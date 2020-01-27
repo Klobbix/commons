@@ -13,6 +13,38 @@ public class StringUtil {
     }
 
     /**
+     * Trims whitespace off of the left side of the string.
+     * @param input The string to trim
+     * @return The trimmed string without any leading whitespace
+     */
+    public static String trimLeft(String input) {
+        char[] value = input.toCharArray();
+        int len = value.length;
+        int st = 0;
+
+        while ((st < len) && (value[st] <= ' ')) {
+            st++;
+        }
+        return (st > 0) ? input.substring(st, len) : input;
+    }
+
+    /**
+     * Trims whitespace off of the right side of the string.
+     * @param input The string to trim
+     * @return The trimmed string without any trailing whitespace
+     */
+    public static String trimRight(String input) {
+        char[] value = input.toCharArray();
+        int len = value.length;
+        int st = 0;
+
+        while ((st < len) && (value[len - 1] <= ' ')) {
+            len--;
+        }
+        return (len < value.length) ? input.substring(st, len) : input;
+    }
+
+    /**
      * Removes all whitespace in a string.
      *
      * @param input The string to remove whitespace from
