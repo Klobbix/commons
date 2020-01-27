@@ -15,6 +15,7 @@
         <module>database</module>
         <module>lang</module>
         <module>network</module>
+        <module>gaming</module>
     </modules>
 
     <properties>

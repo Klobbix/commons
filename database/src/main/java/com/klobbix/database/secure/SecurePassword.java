@@ -16,80 +16,49 @@ public class SecurePassword {
 	 * @return The digested password
 	 */
 	public static String encrypt(String input) {
-		return encrypt(input, true);
+		return strongDigest(input);
 	}
 
-	/**
-	 * Generates a encrypted password.
-	 *
-	 * @param input  The password to encrypt
-	 * @param strong Makes the hash more secure with multiple hashing and random salt bytes
-	 * @return The encrypted password
-	 */
-	public static String encrypt(String input, boolean strong) {
-		return strong ? strongDigest(input) : digest(input);
-	}
 
 	/**
 	 * Generates a digested password using a specified algorithm.
 	 *
 	 * @param input     The password to encrypt
 	 * @param algorithm The hashing algorithm to use
-	 * @param strong    Makes the hash more secure with multiple hashing and random salt bytes
 	 * @return The encrypted password
 	 */
-	public static String encrypt(String input, String algorithm, boolean strong) {
+	public static String encrypt(String input, String algorithm) {
 		ConfigurablePasswordEncryptor encryptor = new ConfigurablePasswordEncryptor();
 		encryptor.setAlgorithm(algorithm);
-		encryptor.setPlainDigest(strong);
+		encryptor.setPlainDigest(true);
 		return encryptor.encryptPassword(input);
 	}
 
-	public static boolean matches(String input) {
-		return matchesStrongDigest(input);
-	}
-
-	/**
-	 * Verifies that an input matches an encrypted password.
-	 *
-	 * @param input  The input
-	 * @param strong If the original encryption algorithm was strong
-	 * @return True if matches otherwise false
-	 */
-	public static boolean matches(String input, boolean strong) {
-		return strong ? matchesStrongDigest(input) : matchesDigest(input);
+	public static boolean matches(String plain, String encrypted) {
+		return matchesStrongDigest(plain, encrypted);
 	}
 
 	/**
 	 * Verifies that an input matches an encrypted password.
 	 *
 	 * @param input     The input
+	 * @param encrypted The encrypted password
 	 * @param algorithm The algorithm used in the original encryption
-	 * @param strong    If the original encryption algorithm was strong
 	 * @return True if matches otherwise false
 	 */
-	public static boolean matches(String input, String algorithm, boolean strong) {
+	public static boolean matches(String input, String encrypted, String algorithm) {
 		ConfigurablePasswordEncryptor encryptor = new ConfigurablePasswordEncryptor();
 		encryptor.setAlgorithm(algorithm);
-		encryptor.setPlainDigest(strong);
-		return encryptor.checkPassword(input, encryptor.encryptPassword(input));
-	}
-
-	private static String digest(String input) {
-		return new BasicPasswordEncryptor().encryptPassword(input);
+		encryptor.setPlainDigest(true);
+		return encryptor.checkPassword(input, encrypted);
 	}
 
 	private static String strongDigest(String input) {
 		return new StrongPasswordEncryptor().encryptPassword(input);
 	}
 
-	private static boolean matchesDigest(String input) {
-		BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
-		return encryptor.checkPassword(input, encryptor.encryptPassword(input));
-	}
-
-	private static boolean matchesStrongDigest(String input) {
+	private static boolean matchesStrongDigest(String input, String encrypted) {
 		StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
-		return encryptor.checkPassword(input, encryptor.encryptPassword(input));
+		return encryptor.checkPassword(input, encrypted);
 	}
 }
