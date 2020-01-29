@@ -13,6 +13,4 @@ public interface DatabaseConnection {
 
 	Connection getConnection();
 
-	void closeConnection();
-
 }
