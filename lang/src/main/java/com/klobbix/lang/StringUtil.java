@@ -2,6 +2,12 @@ package com.klobbix.lang;
 
 public class StringUtil {
 
+	public static String ALPHA_LOWER = "abcdefghijklmnopqrstuvwxyz";
+	public static String ALPHA_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public static String ALPHA = ALPHA_LOWER + ALPHA_UPPER;
+	public static String NUMERIC = "0123456789";
+	public static String ALPHA_NUMERIC = ALPHA + NUMERIC;
+
 	/**
 	 * Reverses a string, i.e. "string" becomes "gnirts".
 	 *
