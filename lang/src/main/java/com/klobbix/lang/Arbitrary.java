@@ -6,7 +6,11 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Arbitrary {
 
@@ -141,5 +145,15 @@ public class Arbitrary {
 
     public static Date date() {
         return Date.from(localDate().atStartOfDay(ZoneId.of("UTC")).toInstant());
+    }
+
+    public static <T> List<T> manyOf(Supplier<T> supplier, int numberOfValues) {
+        return IntStream.range(0, numberOfValues)
+                .mapToObj(n -> supplier.get())
+                .collect(Collectors.toList());
+    }
+
+    public static <T> T oneOf(List<T> values) {
+        return values.get(intBetween(0, values.size() - 1));
     }
 }
