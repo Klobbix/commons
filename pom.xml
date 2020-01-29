@@ -16,6 +16,7 @@
         <module>lang</module>
         <module>network</module>
         <module>gaming</module>
+        <module>json</module>
     </modules>
 
     <properties>
