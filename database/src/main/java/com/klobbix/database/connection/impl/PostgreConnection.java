@@ -6,7 +6,7 @@ import com.zaxxer.hikari.HikariConfig;
 
 public class PostgreConnection extends AbstractConnection {
 
-	protected PostgreConnection(String host, String port, String schema, String user, String password) {
+	public PostgreConnection(String host, String port, String schema, String user, String password) {
 		super(host, port, schema, user, password);
 	}
 
