@@ -42,7 +42,11 @@ public class Arbitrary {
      * @return The generated string
      */
     public static String alphaNumericString() {
-        return alphaNumericString(30);
+        return alphaNumericString(1, 30);
+    }
+
+    public static String alphaNumericString(int minLength) {
+        return alphaNumericString(minLength, 30);
     }
 
     /**
@@ -51,41 +55,55 @@ public class Arbitrary {
      * @param maxLength The maximum size of the resulting string
      * @return The generated string
      */
-    public static String alphaNumericString(int maxLength) {
-        int amount = intBetween(1, maxLength);
-        String pool = StringUtil.ALPHA_NUMERIC;
+    public static String alphaNumericString(int minLength, int maxLength) {
+        return generateStringFromPool(minLength, maxLength, StringUtil.ALPHA_NUMERIC);
+    }
+
+    /**
+     * Generates a String of min and max length from a pool of letters in a String.
+     *
+     * @param min  The minimum resulting String length
+     * @param max  The maximum resulting String length
+     * @param pool The pool of characters to use
+     * @return A randomly generated String
+     */
+    public static String generateStringFromPool(int min, int max, String pool) {
+        int amount = intBetween(min, max);
         StringBuilder builder = new StringBuilder(amount);
         for (int i = 0; i < amount; i++) {
-            int letter = intBetween(0, pool.length());
+            int letter = intBetween(0, pool.length() - 1);
             builder.append(pool.charAt(letter));
         }
         return builder.toString();
     }
 
     /**
-     * Returns an alphabetic string consisting of both upper and lower case letters.
+     * Returns an alphabetic String consisting of both upper and lower case letters.
      *
-     * @return The generated string
+     * @return The generated String
      */
     public static String string() {
-        return string(30);
+        return string(1, 30);
     }
 
     /**
-     * Returns an alphabetic string consisting of both upper and lower case letters.
+     * Returns an alphabetic String consisting of both upper and lower case letters.
      *
-     * @param maxLength The maximum size of the resulting string
+     * @return The generated String
+     */
+    public static String string(int minLength) {
+        return string(minLength, 30);
+    }
+
+    /**
+     * Returns an alphabetic String consisting of both upper and lower case letters.
+     *
+     * @param minLength The minimum size of the resulting String
+     * @param maxLength The maximum size of the resulting String
      * @return The generated string
      */
-    public static String string(int maxLength) {
-        int amount = intBetween(1, maxLength);
-        String pool = StringUtil.ALPHA;
-        StringBuilder builder = new StringBuilder(amount);
-        for (int i = 0; i < amount; i++) {
-            int letter = intBetween(0, pool.length());
-            builder.append(pool.charAt(letter));
-        }
-        return builder.toString();
+    public static String string(int minLength, int maxLength) {
+        return generateStringFromPool(minLength, maxLength, StringUtil.ALPHA);
     }
 
     /**
@@ -94,7 +112,17 @@ public class Arbitrary {
      * @return The generated string
      */
     public static String numericString() {
-        return numericString(30);
+        return numericString(1, 30);
+    }
+
+    /**
+     * Returns an numeric string consisting of only the numbers 0-9.
+     *
+     * @param minLength The minimum length of the string
+     * @return The generated string
+     */
+    public static String numericString(int minLength) {
+        return numericString(minLength, 30);
     }
 
     /**
@@ -103,19 +131,12 @@ public class Arbitrary {
      * @param maxLength The maximum size of the resulting string
      * @return The generated string
      */
-    public static String numericString(int maxLength) {
-        int amount = intBetween(1, maxLength);
-        String pool = StringUtil.NUMERIC;
-        StringBuilder builder = new StringBuilder(amount);
-        for (int i = 0; i < amount; i++) {
-            int letter = intBetween(0, pool.length());
-            builder.append(pool.charAt(letter));
-        }
-        return builder.toString();
+    public static String numericString(int minLength, int maxLength) {
+        return generateStringFromPool(minLength, maxLength, StringUtil.NUMERIC);
     }
 
     public static int intBetween(int min, int max) {
-        if (min >= max) {
+        if (min > max) {
             throw new IllegalArgumentException("max must be greater than min");
         }
 
@@ -123,7 +144,7 @@ public class Arbitrary {
     }
 
     public static long longBetween(long min, long max) {
-        if (min >= max) {
+        if (min > max) {
             throw new IllegalArgumentException("max must be greater than min");
         }
 
@@ -137,9 +158,7 @@ public class Arbitrary {
     public static LocalDate localDate(LocalDate start, LocalDate end) {
         long startMillis = start.atTime(LocalTime.NOON).toInstant(ZoneOffset.UTC).toEpochMilli();
         long endMillis = end.atTime(LocalTime.NOON).toInstant(ZoneOffset.UTC).toEpochMilli();
-
-        Long epochMilli = longBetween(startMillis, endMillis);
-
+        long epochMilli = longBetween(startMillis, endMillis);
         return Instant.ofEpochMilli(epochMilli).atZone(ZoneId.of("UTC")).toLocalDate();
     }
 
